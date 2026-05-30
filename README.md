@@ -180,7 +180,18 @@ Playwright рекомендует приоритет:
 4. **Текстовые методы** — когда нет других зацепок.
 5. **CSS/XPath** — самый хрупкий, используй только если ничего другого не осталось.
 
-### 8. Запуск и параллелизм
+### 8. Как прочитать localStorage страницы
+#### Через `page`:
+```python
+page.evaluate("localStorage.getItem('token')")
+```
+#### Через `context`:
+``` python
+storage = page.context.storage_state()
+local_storage = storage.get('origins', [{}])[0].get('localStorage', [])
+```
+
+### 9. Запуск и параллелизм
 Обычный запуск (один тест за другим):
 ```bash
 pytest test_auth.py -v
